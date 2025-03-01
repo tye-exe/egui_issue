@@ -1,4 +1,4 @@
-This repo is a demonstration of a bug/issue i have with "egui_kittest".
+This repo is a demonstration of a bug/issue i have with "egui_kittest" whilst trying to fill several text inputs in a "Window".
 
 ### How to reproduce
 #### On Nix
@@ -15,7 +15,7 @@ Run "cargo test" to run the tests, with the output images generated in "./tests/
 I expect there to only be one input per textbox.
 
 #### One by one
-This is the output from trying to input text into the first empty text box three times.
+This is the output from trying to input text into the first empty text box three times on different steps, after the former text box has had text typed into it.
 
 ![](./tests/snapshots/one_by_one.png)
 
@@ -35,7 +35,7 @@ It seemed to work initially, but i could only navigate between text boxes with "
 
 
 ### Sanity Check
-As a sanity check i tried just adding text to the first text box, which does work as expected.
+As a sanity check i tried just adding text to **only** the first text box, which does work as expected.
 
 ![](./tests/snapshots/single_works.png)
 
