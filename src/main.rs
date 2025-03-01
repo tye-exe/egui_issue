@@ -133,4 +133,39 @@ mod tests {
 
         harness.snapshot("all_at_once");
     }
+
+    #[test]
+    fn keyboard_input() {
+        let mut harness = egui_kittest::HarnessBuilder::default()
+            .with_size((320.0, 250.0))
+            .build_eframe(|_| MyApp::default());
+
+        harness.run_steps(2);
+
+        // Find first textbox with node searching.
+        harness
+            .get_by_role_and_label(egui::accesskit::Role::Window, "Demo Window")
+            .query_all(By::new().value("").predicate(|node| node.is_text_input()))
+            .next()
+            .unwrap()
+            .type_text("First");
+
+        harness.run_steps(3);
+
+        // Continue interaction with manual key inputs.
+
+        // Should be second text box
+        harness.press_key(egui::Key::Tab);
+        harness.run_steps(3);
+        harness.press_key(egui::Key::A);
+        harness.run_steps(3);
+
+        // Should be third text box
+        harness.press_key(egui::Key::Tab);
+        harness.run_steps(3);
+        harness.press_key(egui::Key::B);
+        harness.run_steps(3);
+
+        harness.snapshot("keyboard_input");
+    }
 }
