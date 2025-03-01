@@ -1,0 +1,9 @@
+/target
+
+# Direnv cache
+.direnv
+
+# egui_kittest artefacts
+**/tests/snapshots/**/*.diff.png
+**/tests/snapshots/**/*.new.png
+
