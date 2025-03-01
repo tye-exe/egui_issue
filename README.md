@@ -29,7 +29,7 @@ After the first textbox has been found, you can use the "TAB" key to navigate be
 In this test i tried emulating that.
 
 It seemed to work initially, but i could only navigate between text boxes with "TAB", and not use the "press_key" method on harness to type text into the textboxes.
-(The "First" text is in the first textbox is me using the same code as [Sanity Check](<README#Sanity Check>) to get focus on the first textbox).
+(The "First" text is in the first textbox is me using the same code as [Sanity Check](<README.md#Sanity Check>) to get focus on the first textbox).
 
 ![](./tests/snapshots/keyboard_input.png)
 
