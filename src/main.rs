@@ -39,10 +39,31 @@ impl eframe::App for MyApp {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use egui::accesskit::Role;
     use egui_kittest::kittest::{By, Queryable};
 
     #[test]
-    fn example() {
+    fn single_works() {
+        let mut harness =
+            egui_kittest::HarnessBuilder::default().build_eframe(|_| MyApp::default());
+
+        harness.run_steps(2);
+
+        // Attempt to get first empty Input
+        harness
+            .get_by_role_and_label(egui::accesskit::Role::Window, "Demo Window")
+            .query_all(By::new().value("").predicate(|node| node.is_text_input()))
+            .next()
+            .unwrap()
+            .type_text("First");
+
+        harness.run_steps(3);
+
+        harness.snapshot("single_works");
+    }
+
+    #[test]
+    fn one_by_one() {
         let mut harness =
             egui_kittest::HarnessBuilder::default().build_eframe(|_| MyApp::default());
 
@@ -78,26 +99,31 @@ mod tests {
 
         harness.run_steps(3);
 
-        harness.snapshot("example");
+        harness.snapshot("one_by_one");
     }
 
     #[test]
-    fn one_works() {
+    fn all_at_once() {
         let mut harness =
             egui_kittest::HarnessBuilder::default().build_eframe(|_| MyApp::default());
 
         harness.run_steps(2);
 
-        // Attempt to get first empty Input
-        harness
+        let mut inputs = harness
             .get_by_role_and_label(egui::accesskit::Role::Window, "Demo Window")
-            .query_all(By::new().value("").predicate(|node| node.is_text_input()))
-            .next()
-            .unwrap()
-            .type_text("First");
+            .get_all_by(|node| {
+                node.role() == Role::TextInput || node.role() == Role::MultilineTextInput
+            });
+
+        // Cannot run "harness.step" between inputs due to mutable borrow of harness
+        inputs.next().unwrap().type_text("First");
+        inputs.next().unwrap().type_text("Second");
+        inputs.next().unwrap().type_text("Third");
+        // End mutable borrow of harness
+        drop(inputs);
 
         harness.run_steps(3);
 
-        harness.snapshot("one_works");
+        harness.snapshot("all_at_once");
     }
 }
