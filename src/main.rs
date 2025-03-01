@@ -33,6 +33,10 @@ impl eframe::App for MyApp {
             ui.label("Input Three:");
             ui.text_edit_singleline(&mut self.text_three);
         });
+
+        egui::CentralPanel::default().show(ctx, |_| {
+            // Ensure that centeral panel is rendered
+        });
     }
 }
 
@@ -44,8 +48,9 @@ mod tests {
 
     #[test]
     fn single_works() {
-        let mut harness =
-            egui_kittest::HarnessBuilder::default().build_eframe(|_| MyApp::default());
+        let mut harness = egui_kittest::HarnessBuilder::default()
+            .with_size((320.0, 250.0))
+            .build_eframe(|_| MyApp::default());
 
         harness.run_steps(2);
 
@@ -64,8 +69,9 @@ mod tests {
 
     #[test]
     fn one_by_one() {
-        let mut harness =
-            egui_kittest::HarnessBuilder::default().build_eframe(|_| MyApp::default());
+        let mut harness = egui_kittest::HarnessBuilder::default()
+            .with_size((320.0, 250.0))
+            .build_eframe(|_| MyApp::default());
 
         harness.run_steps(2);
 
@@ -104,8 +110,9 @@ mod tests {
 
     #[test]
     fn all_at_once() {
-        let mut harness =
-            egui_kittest::HarnessBuilder::default().build_eframe(|_| MyApp::default());
+        let mut harness = egui_kittest::HarnessBuilder::default()
+            .with_size((320.0, 250.0))
+            .build_eframe(|_| MyApp::default());
 
         harness.run_steps(2);
 
