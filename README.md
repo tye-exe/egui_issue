@@ -1,3 +1,8 @@
+# SOLVED
+see: https://github.com/emilk/egui/issues/5749
+
+---
+
 This repo is a demonstration of a bug/issue i have with "egui_kittest" whilst trying to fill several text inputs in a "Window".
 
 ### How to reproduce
